@@ -1,17 +1,21 @@
-package com.philipe.demo.domains;
+package com.philipe.demo.domains.model;
 
-import com.philipe.demo.enums.TypeOfClient;
-import com.philipe.demo.enums.TypeOfUser;
+import java.math.BigDecimal;
+
+import com.philipe.demo.domains.enums.ClientType;
+import com.philipe.demo.domains.enums.UserType;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 
 @Entity
+@Table(name = "USERS")
 @Getter
 @Setter
 public class UserEntity {
@@ -26,13 +30,15 @@ public class UserEntity {
     private String email;
     
     @Column(unique = true)
-    private String cpfOrCnpj;
+    private String legalIdentifier;
     
-    private TypeOfUser typeOfUser;
+    private UserType userType;
     
-    private TypeOfClient typeOfClient;
+    private ClientType clientType;
 
     private String password;
+
+    private BigDecimal balance;
 
     
 }

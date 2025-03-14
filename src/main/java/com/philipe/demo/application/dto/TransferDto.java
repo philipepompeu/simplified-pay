@@ -1,6 +1,7 @@
-package com.philipe.demo.dto;
+package com.philipe.demo.application.dto;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
@@ -20,4 +21,6 @@ public class TransferDto {
     private long payer;
     @Schema(description = "The payeee numeric id")
     private long payee;
+
+    private LocalDateTime created_at;
 }

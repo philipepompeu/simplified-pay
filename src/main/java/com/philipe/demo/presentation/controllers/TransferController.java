@@ -1,10 +1,12 @@
-package com.philipe.demo.controllers;
+package com.philipe.demo.presentation.controllers;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.philipe.demo.dto.TransferDto;
+import com.philipe.demo.application.dto.TransferDto;
+import com.philipe.demo.application.services.TransferService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -18,13 +20,27 @@ import org.springframework.web.bind.annotation.RequestBody;
 @RequestMapping("/transfer")
 @Tag(name="Simplified Pay", description="Simplified payment system")
 public class TransferController {    
+
+    @Autowired
+    private TransferService transferService;
+
+    public TransferController(TransferService transferService){
+        this.transferService = transferService;
+    }
     
     @PostMapping()
     @Operation(summary = "Transfer money from payer to payee")
     @ApiResponse(responseCode = "200", description = "Money was transfered")
     @ApiResponse(responseCode = "400", description = "Error occurred")
-    public ResponseEntity<String> transferMoney(@RequestBody TransferDto transfer){
+    public ResponseEntity<TransferDto> transferMoney(@RequestBody TransferDto transfer){
 
-        return ResponseEntity.ok("");
+        try {
+            return ResponseEntity.ok(this.transferService.transferMoney(transfer));
+        } catch (Exception e) {            
+            System.out.println(String.format("Error [ %s ]", e.getMessage() ));
+
+            return ResponseEntity.unprocessableEntity().build();
+        }
+        
     }
 }
