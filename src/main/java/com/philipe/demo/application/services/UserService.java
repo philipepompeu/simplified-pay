@@ -7,6 +7,8 @@ import com.philipe.demo.domains.model.UserEntity;
 import com.philipe.demo.domains.repository.UserEntityRepository;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.dao.DataIntegrityViolationException;
@@ -17,9 +19,11 @@ import org.springframework.stereotype.Service;
 public class UserService {
     
     private final UserEntityRepository repository;
+    private final List<EventListener> observers = new ArrayList<>();
 
-    public UserService(UserEntityRepository repository){
+    public UserService(UserEntityRepository repository, NotificationListener notificationListener){
         this.repository = repository;
+        observers.add(notificationListener);
     }
 
     public boolean canTheUserBeCreated(UserDto user){
@@ -73,6 +77,11 @@ public class UserService {
         System.out.println(String.format("depositToUser id [ %d ] -> new balance %s ", user.getId(), newBalance.toPlainString()));
 
         repository.save(user);
+
+        // Notifica todos os observadores sobre o evento de depósito
+        for (EventListener observer : observers) {
+            observer.onDeposit(value, user);
+        }
     }
 
     //BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();          

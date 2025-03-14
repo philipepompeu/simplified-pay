@@ -7,6 +7,8 @@ import com.philipe.demo.domains.enums.UserType;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -32,8 +34,10 @@ public class UserEntity {
     @Column(unique = true)
     private String legalIdentifier;
     
+    @Enumerated(EnumType.ORDINAL)
     private UserType userType;
     
+    @Enumerated(EnumType.ORDINAL)
     private ClientType clientType;
 
     private String password;
