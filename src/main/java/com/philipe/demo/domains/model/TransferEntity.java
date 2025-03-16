@@ -39,6 +39,6 @@ public class TransferEntity {
 
     @Column(nullable = false, updatable = false)
     @CreationTimestamp
-    private LocalDateTime created_at;
+    private LocalDateTime createdAt;
     
 }

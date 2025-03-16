@@ -10,11 +10,11 @@ public class UserMapper {
     
     private static ModelMapper mapper = new ModelMapper();
 
-    public static UserEntity toEntity(UserDto dto){
+    public static UserEntity toEntity(final UserDto dto){
         return mapper.map(dto, UserEntity.class);
     }
 
-    public static UserDto toDto(UserEntity entity){
+    public static UserDto toDto(final UserEntity entity){
         return mapper.map(entity, UserDto.class);
     }
 

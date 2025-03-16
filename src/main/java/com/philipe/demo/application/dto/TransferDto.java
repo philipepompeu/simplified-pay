@@ -14,13 +14,22 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class TransferDto {
-    
-    private BigDecimal value;
-
+    /**
+     * Value to be transfered to <payee>.
+     */
+    private BigDecimal value;  
+    /**
+     * The id of the user that will get the money withdraw.
+    */
     @Schema(description = "The payer numeric id")
     private long payer;
+    /**
+     * The id of the user that will receive get the money.
+    */
     @Schema(description = "The payeee numeric id")
-    private long payee;
-
-    private LocalDateTime created_at;
+    private long payee;    
+    /**
+     * Date of the transaction was created.
+    */
+    private LocalDateTime createdAt;
 }

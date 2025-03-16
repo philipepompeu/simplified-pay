@@ -14,11 +14,11 @@ public class TransferMapper {
     @Autowired
     private final UserEntityRepository usersRepository;
     
-    public TransferMapper(UserEntityRepository users){
+    public TransferMapper(final UserEntityRepository users){
         this.usersRepository = users;
     }
 
-    public TransferEntity toEntity(TransferDto dto){
+    public TransferEntity toEntity(final TransferDto dto){
         
         UserEntity payee = this.usersRepository.findById(dto.getPayee()).orElseThrow();
         UserEntity payer = this.usersRepository.findById(dto.getPayer()).orElseThrow();
@@ -35,11 +35,11 @@ public class TransferMapper {
 
     }
 
-    public TransferDto toDto(TransferEntity entity){
+    public TransferDto toDto(final TransferEntity entity){
 
         return new TransferDto( entity.getValue(),
                                 entity.getPayer().getId(),
                                 entity.getPayee().getId(),
-                                entity.getCreated_at());
+                                entity.getCreatedAt());
     }
 }

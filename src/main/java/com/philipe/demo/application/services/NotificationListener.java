@@ -12,12 +12,12 @@ public class NotificationListener implements EventListener {
 
     private final NotificationService notificationService;
 
-    public NotificationListener(NotificationService service){
+    public NotificationListener(final NotificationService service){
         this.notificationService = service;
     }
 
     @Override
-    public void onDeposit(BigDecimal value, UserEntity user) {
+    public void onDeposit(final BigDecimal value, final UserEntity user) {
         
         String message = String.format("You received %s", value.toString());        
         notificationService.addNotification(new NotificationDto(user.getEmail(), message) );        

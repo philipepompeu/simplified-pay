@@ -23,6 +23,9 @@ jobs:
           java-version: '17'
           cache: 'maven'
 
+      - name: Análise estática do código com checkstyle
+        run: mvn checkstyle:check
+
       - name: Construir e rodar testes
         run: mvn clean install        
 

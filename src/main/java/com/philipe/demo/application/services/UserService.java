@@ -32,7 +32,7 @@ public class UserService {
         Optional<UserEntity> entity = this.repository.findByLegalIdentifierOrEmail(user.getLegalIdentifier(), user.getEmail());
 
         if (entity.isPresent()) {
-           return false;
+            return false;
         }
         
         return true;

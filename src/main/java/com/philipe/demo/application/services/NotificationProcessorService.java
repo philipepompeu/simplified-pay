@@ -24,7 +24,7 @@ public class NotificationProcessorService {
         this.externalNotificationService = externalNotificationService;
     }
 
-    @Scheduled(fixedDelay = 90000)
+    @Scheduled(fixedDelayString = "${scheduler.notification.delay}")
     public void processPendingNotifications(){
 
         
