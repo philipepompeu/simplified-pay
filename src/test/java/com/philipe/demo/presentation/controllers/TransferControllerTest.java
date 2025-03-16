@@ -23,8 +23,7 @@ import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
 import com.philipe.demo.application.dto.TransferDto;
 import com.philipe.demo.application.dto.UserDto;
-import com.philipe.demo.domains.enums.ClientType;
-import com.philipe.demo.domains.enums.UserType;
+import com.philipe.demo.application.dto.UserDtoBuilder;
 import com.philipe.demo.infra.external.ExternalAuthorizationService;
 
 
@@ -34,6 +33,7 @@ public class TransferControllerTest {
 
     private UserDto payer;
     private UserDto payee;
+    private UserDtoBuilder userBuilder = new UserDtoBuilder();
     
     @Autowired
     private TestRestTemplate restTemplate;
@@ -46,25 +46,25 @@ public class TransferControllerTest {
 
         Random random = new Random();       
 
-        payer = new UserDto();
-        payer.setFullName("payer");
-        payer.setClientType(ClientType.NATURAL_PERSON);
-        payer.setLegalIdentifier("9246249208"+ String.valueOf(random.nextInt()));
-        payer.setEmail(String.valueOf(random.nextInt())+"admin@provider.com");
-        payer.setBalance(new BigDecimal(1000));
-        payer.setUserType(UserType.SIMPLE_USER);
-        payer.setPassword("pwd");
+        payer = userBuilder.naturalPerson()
+                            .simpleUser()
+                            .fullName("payer")
+                            .legalIdentifier("9246249208"+ String.valueOf(random.nextInt()))
+                            .email(String.valueOf(random.nextInt())+"admin@provider.com")
+                            .withBalanceOf(1000)
+                            .password("pwd")
+                            .build(); 
         
         payer = postUser(payer).getBody();
         
-        payee = new UserDto();
-        payee.setFullName("payee");
-        payee.setClientType(ClientType.NATURAL_PERSON);
-        payee.setLegalIdentifier("9246249208"+ String.valueOf(random.nextInt()));
-        payee.setEmail(String.valueOf(random.nextInt())+"admin@provider.com");
-        payee.setBalance(new BigDecimal(1000));
-        payee.setUserType(UserType.SIMPLE_USER);
-        payee.setPassword("pwd");
+        payee = userBuilder.naturalPerson()
+                            .simpleUser()
+                            .fullName("payer")
+                            .legalIdentifier("9246249208"+ String.valueOf(random.nextInt()))
+                            .email(String.valueOf(random.nextInt())+"admin@provider.com")
+                            .withBalanceOf(1000)
+                            .password("pwd")
+                            .build(); 
         
         payee = postUser(payee).getBody();
 
@@ -153,14 +153,16 @@ public class TransferControllerTest {
         // Simula que o serviço externo sempre autoriza a transação
         Mockito.when(authorizationService.authorize(Mockito.any(TransferDto.class))).thenReturn(true);
 
-        UserDto merchant = new UserDto();
-        merchant.setFullName("Im a Merchant");
-        merchant.setClientType(ClientType.LEGAL_ENTITY);
-        merchant.setLegalIdentifier("96399505000140");
-        merchant.setEmail("merchant@provider.com");
-        merchant.setBalance(new BigDecimal(1000));
-        merchant.setUserType(UserType.MERCHANT);
-        merchant.setPassword("pwd");        
+        
+
+        UserDto merchant = userBuilder.merchant()
+                                        .legalEntity()
+                                        .fullName("Im a Merchant")
+                                        .legalIdentifier("96399505000140")
+                                        .email("merchant@provider.com")
+                                        .withBalanceOf(1000)
+                                        .password("pwd")
+                                        .build();
         merchant = postUser(merchant).getBody();        
         
         TransferDto transfer = new TransferDto( BigDecimal.valueOf(10), merchant.getId(), payee.getId(), LocalDateTime.now());
