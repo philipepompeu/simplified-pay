@@ -12,12 +12,6 @@ O **Simplified-Pay** é uma plataforma de pagamentos simplificada. Nela, é poss
   - Retorna **200** em caso de sucesso.
   - Retorna **422** caso validações falhem (exemplo: saldo insuficiente ou tentativa de transferência por lojistas).
 
-## Requisitos não implementados
-
-- Antes de finalizar a transferência, deve-se consultar um serviço autorizador externo, use este mock
-  [https://util.devi.tools/api/v2/authorize](https://util.devi.tools/api/v2/authorize) para simular o serviço
-  utilizando o verbo `GET`;
-
 ### Persistência de Dados
 Os endpoints foram criados utilizando **Spring Boot** e **Spring Data JPA** para persistência dos dados no banco de dados.
 
