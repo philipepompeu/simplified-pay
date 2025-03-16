@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.philipe.demo.application.dto.TransferDto;
 import com.philipe.demo.application.services.TransferService;
+import com.philipe.demo.presentation.exception.RequestValidationException;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -31,15 +32,17 @@ public class TransferController {
     @PostMapping()
     @Operation(summary = "Transfer money from payer to payee")
     @ApiResponse(responseCode = "200", description = "Money was transfered")
-    @ApiResponse(responseCode = "400", description = "Error occurred")
-    public ResponseEntity<TransferDto> transferMoney(@RequestBody TransferDto transfer){
+    @ApiResponse(responseCode = "422", description = "Validation failed")
+    @ApiResponse(responseCode = "400", description = "Bad Request")
+    public ResponseEntity<?> transferMoney(@RequestBody TransferDto transfer){
 
         try {
             return ResponseEntity.ok(this.transferService.transferMoney(transfer));
+        } catch (RequestValidationException e) {
+            return ResponseEntity.unprocessableEntity().body(e.getMessage());
         } catch (Exception e) {            
             System.out.println(String.format("Error [ %s ]", e.getMessage() ));
-
-            return ResponseEntity.unprocessableEntity().build();
+            return ResponseEntity.badRequest().build();
         }
         
     }
