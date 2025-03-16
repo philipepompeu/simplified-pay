@@ -33,3 +33,5 @@ O projeto segue uma **estrutura de pastas baseada na Arquitetura Limpa**, garant
 ## Considerações Finais
 O Simplified-Pay foi desenvolvido para demonstrar boas práticas de arquitetura e engenharia de software, garantindo modularidade, testabilidade e escalabilidade. O uso do **padrão Observer** desacopla a criação de notificações, enquanto a **execução assíncrona** das notificações evita impacto no tempo de resposta das transferências. Além disso, a adoção da **Arquitetura Limpa** facilita futuras manutenções e extensões do sistema.
 
+![Build](https://github.com/philipepompeu/simplified-pay/actions/workflows/ci.yml/badge.svg)
+
