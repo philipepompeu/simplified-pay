@@ -25,7 +25,9 @@ O projeto segue uma **estrutura de pastas baseada na Arquitetura Limpa**, garant
 
 ## Tecnologias Utilizadas
 - **Java 17**
-- **Spring Boot** (Spring Web, Spring Data JPA, Spring Scheduling)
+- **Spring Boot** (Spring Web, Spring Data JPA, Spring Scheduling, Spring Actuator)
+- **Swagger(springdoc-openapi)**
+- **Análise estática do código(checkstyle)**
 - **Banco de Dados Relacional (H2)**
 - **ModelMapper** para conversão de DTOs
 - **Padrões de Design: Observer**
