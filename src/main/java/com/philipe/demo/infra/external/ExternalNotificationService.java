@@ -9,27 +9,24 @@ import com.philipe.demo.domains.enums.NotificationStatus;
 
 @Service
 public class ExternalNotificationService {
+    private final ExternalNotificationClient externalNotificationClient;
 
-    private static final String NOTIFY_URL = "https://util.devi.tools/api/v1/notify";
-    private final RestTemplate restTemplate = new RestTemplate();
+    public ExternalNotificationService(ExternalNotificationClient externalNotificationClient){
+        this.externalNotificationClient = externalNotificationClient;
+    }
 
 
     public NotificationStatus send(NotificationDto dto){
         NotificationStatus status;
-        try {
-            ResponseEntity<String> response = restTemplate.postForEntity(NOTIFY_URL, dto, String.class);
-            
-            if (response.getStatusCode().is2xxSuccessful()) {
-                
+        try {            
+            if (externalNotificationClient.send(dto).getStatusCode().is2xxSuccessful()) {                
                 status = NotificationStatus.SENT;
-            } else {
-                
+            } else {                
                 status = NotificationStatus.FAILED;
             }
             
         } catch (Exception e) {
-            status = NotificationStatus.FAILED;
-            
+            status = NotificationStatus.FAILED;            
         }
         
         return status;
